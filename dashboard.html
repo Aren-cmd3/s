@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <header>
+        <img src="Logo.png" alt="Logo" width="60" height="60" />
+        <div class="logo">Class Craft</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="index2.html">SHOP</a></li>
+                <li><a href="index4.html" id="cart-link">CART <span class="cart-count">0</span></a></li>
+                <li id="dashboard-container">
+                    <img id="dashboard-pic" src="default-avatar.png" alt="Profile Picture" class="profile-circle" style="width: 60px; height: 60px; border-radius: 50%;">
+                    <a href="dashboard.html" class="active" style="background: #b1464a; color: white;">DASHBOARD</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="dashboard-wrapper">
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <span class="stat-icon">🛍️</span>
+                <h3>Total Orders</h3>
+                <p class="stat-number">0</p>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">💰</span>
+                <h3>Total Spent</h3>
+                <p class="stat-number">₱0.00</p>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">⭐</span>
+                <h3>Reward Points</h3>
+                <p class="stat-number">0</p>
+            </div>
+        </div>
+
+    <div class="dashboard-container">
+        <div class="profile-section">
+            <label for="profile-pic-upload">
+                <img id="profile-pic" src="default-avatar.png" alt="Profile Picture">
+            </label>
+            <input type="file" id="profile-pic-upload" accept="image/*" style="display: none;">
+            <h2 id="user-name">Hello, User!</h2>
+            <button class="logout-btn" onclick="logout()">LOGOUT</button>
+        </div>
+
+        <div class="address-section">
+            <h2>MY ADDRESSES</h2>
+            <button class="add-address-btn" onclick="openAddressModal()">+ ADD NEW ADDRESS</button>
+
+            <div id="address-list">
+                <!-- Address items will be inserted dynamically here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Address Modal -->
+    <div id="address-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddressModal()">&times;</span>
+            <h3 id="modal-title">Add New Address</h3>
+            <input type="text" id="address-firstname" placeholder="First Name">
+            <input type="text" id="address-middlename" placeholder="Middle Name">
+            <input type="text" id="address-lastname" placeholder="Last Name">
+            <input type="text" id="address-phone" placeholder="Phone Number">
+            <textarea id="address-details" placeholder="Address"></textarea>
+            <button onclick="saveAddress()">Save</button>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <footer>
+    <p>@2025 Class Craft</p>
+    </footer>
+</body>
+</html>

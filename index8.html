@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Class Craft</title>
+    <link rel="stylesheet" href="styles8.css">
+</head>
+<body>
+    <header>
+        <img src="Logo.png" alt="Logo" width="60" height="60" />
+        <div class="logo">Class Craft</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="index2.html">SHOP</a></li>
+                <li><a href="index4.html" id="cart-link">CART <span class="cart-count">0</span></a></li>
+                <li id="dashboard-container">
+                    <img id="dashboard-pic" src="default-avatar.png" alt="Profile Picture" class="profile-circle" style="width: 60px; height: 60px; border-radius: 50%;">
+                    <a href="index3.html" id="dashboard-link">LOG IN</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="checkout-container">
+        <div class="checkout-content">
+            <div class="product-summary">
+                <h2>Order Summary</h2>
+                <div class="product-preview">
+                    <!-- Cart items will be displayed here -->
+                </div>
+                <div class="order-total">
+                    <div class="subtotal">
+                        <span>Subtotal</span>
+                        <span id="subtotal">₱0.00</span>
+                    </div>
+                    <div class="shipping">
+                        <span>Shipping</span>
+                        <span>FREE</span>
+                    </div>
+                    <div class="total">
+                        <span>Total</span>
+                        <span id="total">₱0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <form id="checkout-form" class="checkout-form" action="https://formsubmit.io/send/classcraftbot@gmail.com" method="POST">
+                <h2>Shipping Information</h2>
+                <div class="form-group">
+                    <input type="text" id="name" name="name" required>
+                    <label for="name">Full Name</label>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" required>
+                    <label for="email">Email Address</label>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="phone" name="phone" required>
+                    <label for="phone">Phone Number</label>
+                </div>
+                <div class="form-group">
+                    <textarea id="address" name="address" required></textarea>
+                    <label for="address">Shipping Address</label>
+                </div>
+
+                <div class="payment-section">
+                    <h2>Payment Method</h2>
+                    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="cod" checked>
+                            <span class="radio-custom"></span>
+                            <span>Cash on Delivery</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="gcash">
+                            <span class="radio-custom"></span>
+                            <span>GCash</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="place-order-btn">
+                    Place Order
+                    <span class="btn-icon">→</span>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        (function() {
+            emailjs.init("DceEzWwmYn-Yp0ADD");
+        })();
+    </script>
+    <script src="script8.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Check if user is logged in and update login display
+            let user = JSON.parse(localStorage.getItem("loggedInUser"));
+            const dashboardLink = document.querySelector("#dashboard-link");
+            const dashboardPic = document.getElementById("dashboard-pic");
+
+            if (user) {
+                let firstName = user.name.split(" ")[0];
+                dashboardLink.textContent = `Hi, ${firstName}`;
+                dashboardLink.href = "dashboard.html";
+                if (user.profilePic) {
+                    dashboardPic.src = user.profilePic;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

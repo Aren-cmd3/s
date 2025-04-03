@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Craft Store</title>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+    <header>
+        <img src="Logo.png" alt="Logo" width="60" height="60" />
+        <div class="logo">Class Craft</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="index2.html" class="active" style="background: #b1464a; color: white;">SHOP</a></li>
+                <li id="cart-container" style="display: none;"><a href="index4.html" id="cart-link">CART <span class="cart-count">0</span></a></li>
+                <li id="dashboard-container">
+                    <img id="dashboard-pic" src="default-avatar.png" alt="Profile Picture" class="profile-circle" style="width: 60px; height: 60px; border-radius: 50%;">
+                    <a href="index3.html" id="dashboard-link">LOG IN</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1 class="animated-title">School Supplies</h1>
+        <p class="hero-subtitle">Find everything you need for your academic journey</p>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search products...">
+            <div class="search-icon">🔍</div>
+        </div>
+        <div class="benefits">
+            <div class="benefit-item">
+                <span class="benefit-icon">🚚</span>
+                <p>Free Delivery</p>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">💯</span>
+                <p>Quality Products</p>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon">💰</span>
+                <p>Best Prices</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="categories">
+        <button onclick="filterCategory('')">All</button>
+        <button onclick="filterCategory('Papers')">Papers</button>
+        <button onclick="filterCategory('Pens')">Pens</button>
+        <button onclick="filterCategory('Colors')">Colors</button>
+        <button onclick="filterCategory('Bags')">Bags</button>
+        <button onclick="filterCategory('Others')">Others</button>
+    </div>
+
+    <section class="products" id="products-container"></section>
+
+    <div id="imageModal" class="modal">
+        <div class="modal-content product-detail">
+            <div class="modal-header">
+                <h2 id="modalProductName"></h2>
+                <button id="closeImageModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="Product">
+                <div class="product-info">
+                    <div class="product-details">
+                        <h3 id="modalProductPrice" class="modal-price" style="font-family: 'Poppins', sans-serif;"></h3>
+                        <div class="product-description">
+                            <p class="availability">✅ In Stock</p>
+                            <p class="shipping">🚚 Fast Delivery Available</p>
+                            <p class="guarantee">✨ Quality Guaranteed</p>
+                            <p class="return-policy">↩️ 7-Day Return Policy</p>
+                        </div>
+                        <div class="product-features">
+                            <h4>Product Features:</h4>
+                            <ul id="modalProductFeatures">
+                                <li>High-quality materials</li>
+                                <li>Durable construction</li>
+                                <li>Perfect for students</li>
+                                <li>Classroom-friendly design</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button class="add-to-cart">Add to Cart</button>
+                        <button class="buy-now">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cartModal" class="modal">
+        <div class="modal-content cart-notification">
+            <div class="success-animation">
+                <div class="checkmark">
+                    <div class="check-icon">✓</div>
+                </div>
+            </div>
+            <h3 class="notification-title">Added to Cart!</h3>
+            <p class="notification-message">Item successfully added to your shopping cart</p>
+            <button id="closeModal" class="notification-btn">Continue Shopping</button>
+        </div>
+    </div>
+
+    <script src="script2.js"></script>
+    <footer>
+        <p>@2025 Class Craft</p>
+    </footer>
+</body>
+</html>

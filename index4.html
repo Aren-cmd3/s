@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Class Craft</title>
+    <link rel="stylesheet" href="styles4.css">
+</head>
+<body>
+    <header>
+        <img src="Logo.png" alt="Logo" width="60" height="60" />
+        <div class="logo">Class Craft</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="index2.html">SHOP</a></li>
+                <li><a href="index4.html" class="active" style="background: #b1464a; color: white;">CART <span id="cart-count">0</span></a></li>
+                <li id="dashboard-container">
+                    <img id="dashboard-pic" src="default-avatar.png" alt="Profile Picture" class="profile-circle" style="width: 60px; height: 60px; border-radius: 50%;">
+                    <a href="index3.html" id="dashboard-link">LOG IN</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="cart-page">
+            <h1 class="animated-title">Your Shopping Cart</h1>
+            <div class="cart-banner">
+                <div class="banner-item">
+                    <span class="icon">🚚</span>
+                    <p>Free Shipping on Orders Over ₱1000</p>
+                    <span class="badge">SAVE MORE!</span>
+                </div>
+                <div class="banner-item">
+                    <span class="icon">⚡</span>
+                    <p>Fast & Secure Checkout</p>
+                    <span class="badge">SAFE & SECURE</span>
+                </div>
+                <div class="banner-item">
+                    <span class="icon">💫</span>
+                    <p>Quality Guaranteed</p>
+                    <span class="badge">PREMIUM</span>
+                </div>
+            </div>
+
+            <div class="cart-container">
+                <div class="check-all-container">
+                    <input type="checkbox" id="check-all" checked>
+                    <label for="check-all">Select All Items</label>
+                </div>
+                <div class="cart-items" id="cart-items">
+                    <!-- Cart items will be added here dynamically -->
+                </div>
+
+                <div class="cart-summary">
+                    <h2>Order Summary</h2>
+                    <div class="summary-line">
+                        <span>Subtotal</span>
+                        <span>₱<span id="total-price">0.00</span></span>
+                    </div>
+                    <button id="proceed-checkout" class="checkout-button" onclick="proceedToCheckout()">Proceed to Checkout</button>
+                </div>
+            </div>
+
+            
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            updateCartUI();
+
+            // Check if user is logged in and update login display
+            let user = JSON.parse(localStorage.getItem("loggedInUser"));
+            const dashboardLink = document.querySelector("#dashboard-link");
+            const dashboardPic = document.getElementById("dashboard-pic");
+
+            if (user) {
+                let firstName = user.name.split(" ")[0];
+                dashboardLink.textContent = `Hi, ${firstName}`;
+                dashboardLink.href = "dashboard.html";
+                if (user.profilePic) {
+                    dashboardPic.src = user.profilePic;
+                }
+            }
+
+
+        });
+
+        function proceedToCheckout() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let totalPrice = parseFloat(document.getElementById("total-price").textContent);
+
+            if (cart.length === 0) {
+                alert("Your cart is empty. Please add items before proceeding to checkout.");
+                return;
+            }
+
+            if (totalPrice <= 0) {
+                alert("Invalid total price. Please ensure your cart items have valid prices.");
+                return;
+            }
+
+            window.location.href = "index8.html";
+        }
+
+        function validateForm() {
+            let isValid = true;
+            let fields = ["full-name", "email", "phone", "address"];
+
+            fields.forEach(id => {
+                let field = document.getElementById(id);
+                if (!field.value.trim() || (id === "email" && !field.value.includes("@"))) {
+                    field.style.border = "2px solid red";
+                    isValid = false;
+                } else {
+                    field.style.border = "2px solid green";
+                }
+            });
+
+            if (!isValid) return false;
+
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let totalPrice = document.getElementById("total-price").textContent;
+            let paymentMethod = document.getElementById("payment-method").value;
+            let orderDetails = cart.map(item => 
+                `${item.name} (x${item.quantity}) - ₱${(parseFloat(item.price.replace('₱', '')) * item.quantity).toFixed(2)}`
+            ).join("\n");
+
+            document.getElementById("order-details").value = `Order Details:\n${orderDetails}\n\nTotal Price: ₱${totalPrice}\nPayment Method: ${paymentMethod}`;
+            localStorage.removeItem("cart");
+            return true;
+        }
+
+        function updateCartUI() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let cartItemsContainer = document.getElementById("cart-items");
+            let totalPriceEl = document.getElementById("total-price");
+            let cartCountEl = document.getElementById("cart-count");
+
+            cartItemsContainer.innerHTML = "";
+            let totalPrice = 0;
+            let totalItems = 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="empty-cart-container">
+                        <img src="cart-empty.png" alt="Empty Cart" class="empty-cart-image">
+                        <h2>Your cart is empty</h2>
+                        <p>Add some items to get started!</p>
+                        <a href="index2.html" class="start-shopping-btn">Start Shopping</a>
+                    </div>`;
+            } else {
+                cart.forEach((item, index) => {
+                    let itemPrice = parseFloat(item.price.replace('₱', ''));
+                    let itemTotal = itemPrice * item.quantity;
+                    totalPrice += itemTotal;
+                    totalItems += item.quantity;
+
+                    let itemCard = document.createElement("div");
+                    itemCard.className = "cart-item-card";
+                    itemCard.innerHTML = `
+                        <img src="${item.img}" alt="${item.name}" class="item-image">
+                        <div class="item-details">
+                            <h3>${item.name}</h3>
+                            <p class="item-price">₱${itemPrice.toFixed(2)}</p>
+                            <div class="quantity-controls">
+                                <button onclick="decreaseQuantity(${index})">-</button>
+                                <span id="quantity-${index}">${item.quantity}</span>
+                                <button onclick="increaseQuantity(${index})">+</button>
+                            </div>
+                        </div>
+                        <div class="item-total">
+                            <p>₱${itemTotal.toFixed(2)}</p>
+                            <button onclick="removeFromCart(${index})" class="remove-btn">Remove</button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(itemCard);
+                });
+            }
+
+            totalPriceEl.textContent = totalPrice.toFixed(2);
+            cartCountEl.textContent = totalItems;
+        }
+
+        function increaseQuantity(index) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart[index].quantity++;
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function decreaseQuantity(index) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            if (cart[index].quantity > 1) {
+                cart[index].quantity--;
+            } else {
+                cart.splice(index, 1);
+            }
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function removeFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartUI();
+        }
+    </script>
+    <footer>
+        <p>@2025 Class Craft</p>
+    </footer>
+</body>
+</html>

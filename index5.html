@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Account</title>
+    <link rel="stylesheet" href="styles5.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index3.html" class="back-button">←</a>
+        <h2>Create New Account</h2>
+        <p class="login-text">Already Registered? <a href="index3.html">Login</a></p>
+        <form id="signup-form">
+            <label for="firstName">FIRST NAME</label>
+            <input type="text" id="firstName" required>
+
+            <label for="middleName">MIDDLE NAME</label>
+            <input type="text" id="middleName" required>
+
+            <label for="lastName">LAST NAME</label>
+            <input type="text" id="lastName" required>
+
+            <label>BIRTHDAY</label>
+            <div class="birthday-inputs">
+                <select id="birthMonth" required>
+                    <option value="">Month</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+                <select id="birthDay" required>
+                    <option value="">Day</option>
+                    <script>
+                        for(let i = 1; i <= 31; i++) {
+                            document.write(`<option value="${i}">${i}</option>`);
+                        }
+                    </script>
+                </select>
+                <select id="birthYear" required>
+                    <option value="">Year</option>
+                    <script>
+                        const currentYear = new Date().getFullYear();
+                        for(let i = currentYear - 100; i <= currentYear - 13; i++) {
+                            document.write(`<option value="${i}">${i}</option>`);
+                        }
+                    </script>
+                </select>
+            </div>
+
+            <label>GENDER</label>
+            <div class="gender-selection">
+                <label class="gender-option">
+                    <input type="radio" name="gender" value="male" required>
+                    <span class="radio-custom"></span>
+                    <span>Male</span>
+                </label>
+                <label class="gender-option">
+                    <input type="radio" name="gender" value="female" required>
+                    <span class="radio-custom"></span>
+                    <span>Female</span>
+                </label>
+            </div>
+
+            <label for="email">EMAIL</label>
+            <input type="email" id="email" required>
+
+            <label for="password">PASSWORD</label>
+            <input type="password" id="password" required>
+
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+    <script src="script5.js"></script>
+</body>
+</html>
